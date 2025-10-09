@@ -10,9 +10,14 @@ class PendudukKecamatanController extends Controller
 
     public function index(Request $request)
     {
-        $tahun = $request->get('tahun', date('Y'));
+        // Ambil nilai tahun dari query string:
+        // - null  => tidak ada parameter, default ke tahun berjalan (filter tahun berjalan)
+        // - ''    => "Semua", jangan filter berdasarkan tahun
+        // - angka => filter sesuai tahun yang dipilih
+        $tahunParam = $request->query('tahun');
+        $tahun = $tahunParam !== null ? $tahunParam : date('Y');
 
-        // Normalisasi filter menjadi array
+        // Normalisasi filter kecamatan menjadi array
         $rawFilter = $request->input('kecamatan');
         $filterKecamatan = [];
         if (is_array($rawFilter)) {
@@ -22,11 +27,20 @@ class PendudukKecamatanController extends Controller
         }
 
         // Query dasar
-        $query = Penduduk::where('tahun', $tahun)
-            ->where('kecamatan', 'not like', '%tahun%')
+        $query = Penduduk::query()
             ->select('id', 'kecamatan', 'laki_laki', 'perempuan', 'jumlah_penduduk as total');
 
-        // Terapkan filter hanya jika ada nilai
+        // Terapkan filter tahun:
+        // - Jika tahunParam null (tidak ada parameter), gunakan tahun berjalan
+        // - Jika tahunParam '', tampilkan semua (tanpa filter)
+        // - Jika ada angka, filter sesuai angka
+        if ($tahunParam === null) {
+            $query->where('tahun', date('Y'));
+        } elseif ($tahunParam !== '') {
+            $query->where('tahun', $tahunParam);
+        }
+
+        // Terapkan filter kecamatan hanya jika ada nilai
         if (count($filterKecamatan) > 0) {
             $query->whereIn('kecamatan', $filterKecamatan);
         }
