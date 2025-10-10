@@ -129,31 +129,7 @@ class DashboardController extends Controller
     })->toArray();
 
     // Fallback: jika data kosong, ambil tahun terakhir yang ada datanya
-    if (empty($dataUmur)) {
-        $tahunAdaData = PendudukUmur::select('tahun')
-            ->distinct()
-            ->orderBy('tahun', 'desc')
-            ->pluck('tahun')
-            ->first();
-
-        if ($tahunAdaData) {
-            $tahun = $tahunAdaData;
-            $dataUmur = PendudukUmur::where('tahun', $tahun)
-                ->select('id', 'umur', 'laki_laki', 'perempuan', 'jumlah')
-                ->get()
-                ->map(function ($item) {
-                    return [
-                        'id'         => $item->id,
-                        'umur'       => $item->umur,
-                        'laki_laki'  => $item->laki_laki,
-                        'perempuan'  => $item->perempuan,
-                        'jumlah'     => $item->jumlah
-                    ];
-                })
-                ->toArray();
-        }
-    }
-
+  
     // Filter umur jika ada
     if (!empty($filterUmur) && is_array($filterUmur)) {
         $dataUmur = array_filter($dataUmur, function ($item) use ($filterUmur) {

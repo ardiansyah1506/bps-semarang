@@ -35,7 +35,7 @@
                     <div class="col-md-3">
                         <label for="tahun" class="form-label">Pilih Tahun</label>
                         <select name="tahun" id="tahun" class="form-select">
-                            <option value="">Semua</option>
+                            <option value="">-- Pilih Tahun --</option>
                             @foreach($tahunList as $tahunOption)
                             <option value="{{ $tahunOption }}" {{ $tahun == $tahunOption ? 'selected' : '' }}>
                                     {{ $tahunOption }}

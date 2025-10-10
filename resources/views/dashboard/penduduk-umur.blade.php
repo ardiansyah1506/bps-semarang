@@ -15,6 +15,7 @@
                     <div class="col-md-3">
                         <label for="tahun" class="form-label">Pilih Tahun</label>
                         <select name="tahun" id="tahun" class="form-select">
+                            <option value="">-- Pilih Tahun --</option>
                             @foreach($tahunList as $tahunOption)
                                 <option value="{{ $tahunOption }}" {{ $tahun == $tahunOption ? 'selected' : '' }}>
                                     {{ $tahunOption }}
@@ -22,7 +23,6 @@
                             @endforeach
                         </select>
                     </div>
-                  
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="fas fa-filter me-2"></i>Filter Data
@@ -101,7 +101,6 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>No</th>
-                                <th>Tahun</th>
                                 <th>Kelompok Umur</th>
                                 <th>Laki-laki</th>
                                 <th>Perempuan</th>
@@ -350,30 +349,29 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Data untuk grafik
 const dataUmur = @json($dataUmur);
 const labels = dataUmur.map(item => item.umur);
-const totals = dataUmur.map(item => item.total);
+const totals = dataUmur.map(item => item.total || item.jumlah);
 const lakiLaki = dataUmur.map(item => item.laki_laki);
 const perempuan = dataUmur.map(item => item.perempuan);
 
-// Grafik distribusi umur
+// Chart distribusi umur
 const umurCtx = document.getElementById('umurChart').getContext('2d');
-const umurChart = new Chart(umurCtx, {
+new Chart(umurCtx, {
     type: 'doughnut',
     data: {
         labels: labels,
         datasets: [{
             data: totals,
             backgroundColor: [
-                '#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe',
-                '#43e97b', '#38f9d7', '#fa709a', '#fee140', '#ff9a9e',
-                '#a8edea', '#fed6e3', '#ffecd2'
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
+                '#e74a3b', '#858796', '#5a5c69', '#fd7e14',
+                '#20c997', '#6610f2', '#d63384', '#6f42c1',
+                '#198754', '#0dcaf0', '#ffc107'
             ]
         }]
     },
     options: {
-        responsive: true,
         plugins: {
             legend: {
                 position: 'bottom'
@@ -382,21 +380,24 @@ const umurChart = new Chart(umurCtx, {
     }
 });
 
-// Grafik perbandingan gender per umur
-const genderUmurCtx = document.getElementById('genderUmurChart').getContext('2d');
-const genderUmurChart = new Chart(genderUmurCtx, {
+// Chart perbandingan gender
+const genderCtx = document.getElementById('genderUmurChart').getContext('2d');
+new Chart(genderCtx, {
     type: 'bar',
     data: {
         labels: labels,
-        datasets: [{
-            label: 'Laki-laki',
-            data: lakiLaki,
-            backgroundColor: '#667eea'
-        }, {
-            label: 'Perempuan',
-            data: perempuan,
-            backgroundColor: '#f093fb'
-        }]
+        datasets: [
+            {
+                label: 'Laki-laki',
+                data: lakiLaki,
+                backgroundColor: '#4e73df'
+            },
+            {
+                label: 'Perempuan',
+                data: perempuan,
+                backgroundColor: '#f6c23e'
+            }
+        ]
     },
     options: {
         responsive: true,
@@ -412,5 +413,9 @@ const genderUmurChart = new Chart(genderUmurCtx, {
         }
     }
 });
+
+document.getElementById('tahun').addEventListener('change', function() {
+    this.form.submit();
+});
 </script>
-@endpush 
+@endpush

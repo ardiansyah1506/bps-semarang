@@ -28,7 +28,7 @@
             <div class="input-group mb-2">
                 <label class="input-group-text" for="filter_tahun">Filter Tahun</label>
                 <select class="form-select" id="filter_tahun" name="tahun" onchange="this.form.submit()">
-                    <option value="">Semua Tahun</option>
+                    <option value="">-- Pilih Tahun --</option>
                     @for($tahun = 2020; $tahun <= 2024; $tahun++)
                         <option value="{{ $tahun }}" {{ request('tahun') == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
                     @endfor
