@@ -23,8 +23,8 @@
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">IPG</h5>
                     <p class="card-text">Indeks Pembangunan Gender Kota Semarang</p>
-                    <a href="{{ route('ipgdata') }}" class="btn btn-success"></a>
-                        <i class="bi bi-people-fill"></i> Lihat Data        
+                    <a href="{{ route('ipgdata') }}" class="btn btn-success">
+                        <i class="bi bi-bar-chart-fill"></i> Lihat Data
                     </a>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <h5 class="card-title fw-bold">IDG</h5>
                     <p class="card-text">Indeks Pemberdayaan Gender Kota Semarang</p>
                    <a href="{{ route('nakerjateng') }}" class="btn btn-success"></a>
-                        <i class="bi bi-graph-up"></i> Lihat Data   
+                        <i class="bi bi-bar-chart-fill"></i> Lihat Data   
                     </a>
                 </div>
             </div>

@@ -50,14 +50,13 @@ class DashboardController extends Controller
         $rataPakaian = InflasiPakaian::avg('jumlah');
         $totalTenagaKerjaDua = TenagaKerjaDua::sum('jumlah');
         // ✅ Statistik dari tabel Kemiskinan
-        $totalPendudukMiskin = Kemiskinan::sum('jumlah_penduduk_miskin');
-        $rataPersentaseKemiskinan = Kemiskinan::avg('persentase_penduduk_miskin');
-        $rataGarisKemiskinan = Kemiskinan::avg('garis_kemiskinan');
+        $totalPendudukMiskin = GiniRasMis::sum('penduduk_miskin');
+        $rataPersentaseKemiskinan = GiniRasMis::avg('penduduk_miskin_persen');
+        $rataGarisKemiskinan = GiniRasMis::avg('garis_kemiskinan');
         $rataIndeksKedalaman = Kemiskinan::avg('indeks_kedalaman_kemiskinan');
         $rataIndeksKeparahan = Kemiskinan::avg('indeks_keparahan_kemiskinan');
-
         // ✅ Data per tahun untuk grafik kemiskinan
-        $dataKemiskinan = Kemiskinan::selectRaw('tahun, SUM(jumlah_penduduk_miskin) as total_miskin, AVG(persentase_penduduk_miskin) as persentase')
+        $dataKemiskinan = GiniRasMis::selectRaw('tahun, SUM(penduduk_miskin) as total_miskin, AVG(penduduk_miskin_persen) as persentase')
             ->groupBy('tahun')
             ->orderBy('tahun')
             ->get();
