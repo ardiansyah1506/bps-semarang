@@ -89,7 +89,26 @@
 
                                     <td><span class="fw-bold">{{ number_format($item->jumlah) }}</span></td>
 
-                                    <td>
+                                    <td class="text-nowrap">
+                                        <button type="button"
+                                            class="btn btn-warning btn-sm btn-edit"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editTenagaKerjaDuaModal"
+                                            data-update-url="{{ route('penduduk.kerja.updatedua', $item->id) }}"
+                                            data-tahun="{{ $item->tahun }}"
+                                            data-bekerja-pria="{{ $item->bekerja_pria }}"
+                                            data-bekerja-wanita="{{ $item->bekerja_wanita }}"
+                                            data-pengangguran-pria="{{ $item->pengangguran_pria }}"
+                                            data-pengangguran-wanita="{{ $item->pengangguran_wanita }}"
+                                            data-sekolah-pria="{{ $item->sekolah_pria }}"
+                                            data-sekolah-wanita="{{ $item->sekolah_wanita }}"
+                                            data-rt-pria="{{ $item->rt_pria }}"
+                                            data-rt-wanita="{{ $item->rt_wanita }}"
+                                            data-lainnya-pria="{{ $item->lainnya_pria }}"
+                                            data-lainnya-wanita="{{ $item->lainnya_wanita }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
                                         <form action="#" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -108,6 +127,75 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Edit Data --}}
+<div class="modal fade" id="editTenagaKerjaDuaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="#" method="POST" id="formEditTenagaKerjaDua">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title text-white">Edit Tenaga Kerja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="mb-3">
+                        <label for="edit_tahun" class="form-label">Tahun</label>
+                        <input type="number" class="form-control" id="edit_tahun" name="tahun" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Bekerja (L)</label>
+                            <input type="number" class="form-control" id="edit_bekerja_pria" name="bekerja_pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Bekerja (P)</label>
+                            <input type="number" class="form-control" id="edit_bekerja_wanita" name="bekerja_wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengangguran (L)</label>
+                            <input type="number" class="form-control" id="edit_pengangguran_pria" name="pengangguran_pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengangguran (P)</label>
+                            <input type="number" class="form-control" id="edit_pengangguran_wanita" name="pengangguran_wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Sekolah (L)</label>
+                            <input type="number" class="form-control" id="edit_sekolah_pria" name="sekolah_pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Sekolah (P)</label>
+                            <input type="number" class="form-control" id="edit_sekolah_wanita" name="sekolah_wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Rumah Tangga (L)</label>
+                            <input type="number" class="form-control" id="edit_rt_pria" name="rt_pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Rumah Tangga (P)</label>
+                            <input type="number" class="form-control" id="edit_rt_wanita" name="rt_wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Lainnya (L)</label>
+                            <input type="number" class="form-control" id="edit_lainnya_pria" name="lainnya_pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Lainnya (P)</label>
+                            <input type="number" class="form-control" id="edit_lainnya_wanita" name="lainnya_wanita" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-warning text-white">Update Data</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -179,4 +267,35 @@
         </div>
     </div>
 </div>
+
+{{-- Script untuk isi modal edit + set action --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.btn-edit');
+    const editModal = document.getElementById('editTenagaKerjaDuaModal');
+    const form = document.getElementById('formEditTenagaKerjaDua');
+
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            // Set action URL update
+            form.action = this.getAttribute('data-update-url');
+
+            // Set field values
+            const get = (attr) => this.getAttribute(attr) || '';
+
+            editModal.querySelector('#edit_tahun').value = get('data-tahun');
+            editModal.querySelector('#edit_bekerja_pria').value = get('data-bekerja-pria');
+            editModal.querySelector('#edit_bekerja_wanita').value = get('data-bekerja-wanita');
+            editModal.querySelector('#edit_pengangguran_pria').value = get('data-pengangguran-pria');
+            editModal.querySelector('#edit_pengangguran_wanita').value = get('data-pengangguran-wanita');
+            editModal.querySelector('#edit_sekolah_pria').value = get('data-sekolah-pria');
+            editModal.querySelector('#edit_sekolah_wanita').value = get('data-sekolah-wanita');
+            editModal.querySelector('#edit_rt_pria').value = get('data-rt-pria');
+            editModal.querySelector('#edit_rt_wanita').value = get('data-rt-wanita');
+            editModal.querySelector('#edit_lainnya_pria').value = get('data-lainnya-pria');
+            editModal.querySelector('#edit_lainnya_wanita').value = get('data-lainnya-wanita');
+        });
+    });
+});
+</script>
 @endsection

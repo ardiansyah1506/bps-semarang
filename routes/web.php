@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PendudukKabupatenController;
 use App\Http\Controllers\PendudukKecamatanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -63,14 +64,22 @@ Route::get('/debug-penduduk', function () {
     ]);
 });
 
-// Routes untuk CRUD data umur
-Route::post('/penduduk/umur/tambah', [DashboardController::class, 'tambahDataUmur'])->name('penduduk.umur.tambah');
-Route::put('/penduduk/umur/edit/{id}', [DashboardController::class, 'editDataUmur'])->name('penduduk.umur.edit');
-Route::delete('/penduduk/umur/hapus/{id}', [DashboardController::class, 'hapusDataUmur'])->name('penduduk.umur.hapus');
 
 // Routes untuk CRUD Data Kecamatan
 Route::prefix('penduduk')->name('penduduk.')->group(function () {
         Route::prefix('kecamatan')->name('kecamatan.')->controller(PendudukKecamatanController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/tambah', 'store')->name('tambah');
+                Route::put('/edit/{id}', 'update')->name('edit');
+                Route::delete('/hapus/{id}', 'delete')->name('hapus');
+            });
+        Route::prefix('umur')->name('umur.')->controller(PendudukUmurController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/tambah', 'store')->name('tambah');
+                Route::put('/edit/{id}', 'update')->name('edit');
+                Route::delete('/hapus/{id}', 'delete')->name('hapus');
+            });
+        Route::prefix('sejateng')->name('sejateng.')->controller(PendudukKabupatenController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::post('/tambah', 'store')->name('tambah');
                 Route::put('/edit/{id}', 'update')->name('edit');
@@ -86,9 +95,6 @@ Route::prefix('penduduk')->name('penduduk.')->group(function () {
 
 
 // Routes untuk CRUD Data Jawa Tengah
-Route::post('/penduduk/sejateng/tambah', [DashboardController::class, 'tambahDataSejateng'])->name('penduduk.sejateng.tambah');
-Route::put('/penduduk/sejateng/edit/{id}', [DashboardController::class, 'editDataSejateng'])->name('penduduk.sejateng.edit');
-Route::delete('/penduduk/sejateng/hapus/{id}', [DashboardController::class, 'hapusDataSejateng'])->name('penduduk.sejateng.hapus');
 Route::post('/dashboard/import-penduduk-umur', [PendudukUmurController::class, 'import'])->name('penduduk.umur.import');
 
 
@@ -97,9 +103,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Statistik Penduduk
     Route::get('/penduduk', [DashboardController::class, 'penduduk'])->name('penduduk');
-    Route::get('/penduduk/sejateng', [DashboardController::class, 'pendudukSejateng'])->name('penduduk.sejateng');
-    Route::get('/penduduk/seumur', [DashboardController::class, 'pendudukUmur'])->name('penduduk.umur');
-    
+
     // Tenaga Kerja
     Route::get('/tenaga-kerja', [DashboardController::class, 'tenagaKerja'])->name('tenaga-kerja');
 
@@ -127,10 +131,13 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::post('/penduduk/kerja/tambah', [DashboardController::class, 'kerja'])->name('penduduk.kerja.tambah');
+Route::put('/penduduk/kerja/update/{id}', [DashboardController::class, 'updateKerja'])->name('penduduk.kerja.update');
 Route::post('/penduduk/kerja/tambahdua', [DashboardController::class, 'tambahTenagaKerjaDua'])->name('penduduk.kerja.tambahdua');
+Route::put('/penduduk/kerja/{id}', [DashboardController::class, 'updateTenagaKerjaDua'])->name('penduduk.kerja.updatedua');
 
 Route::delete('/penduduk/kerja/hapus/{id}', [DashboardController::class, 'hapusKerja'])->name('penduduk.kerja.hapus');
 Route::post('/ginirasio/mis/tambah', [DashboardController::class, 'tambahGiniRasio'])->name('ginirasio.mis.tambah');
+Route::put('/ginirasio/mis/{id}', [DashboardController::class, 'updateGiniRasio'])->name('ginirasio.mis.update');
 
 // routes/web.php
 Route::get('/tenagakerjaduaa', [DashboardController::class, 'tenagakerjadua'])->name('tenagakerjadua');

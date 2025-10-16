@@ -15,8 +15,8 @@
                 </div>
                 <h5 class="card-title">Data Penduduk Berdasarkan Umur</h5>
                 <p class="card-text text-muted">Statistik penduduk Kota Semarang berdasarkan kelompok umur</p>
-                <a href="{{ route('penduduk.umur') }}" class="btn btn-primary">
-                    <i class="fas fa-chart-pie me-2"></i>Lihat Dataa
+                <a href="{{ route('penduduk.umur.index') }}" class="btn btn-primary">
+                    <i class="fas fa-chart-pie me-2"></i>Lihat Data
                 </a>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 </div>
                 <h5 class="card-title">Data Penduduk Jawa Tengah</h5>
                 <p class="card-text text-muted">Statistik penduduk kota/kabupaten di Jawa Tengah</p>
-                <a href="{{ route('penduduk.sejateng') }}" class="btn btn-warning">
+                <a href="{{ route('penduduk.sejateng.index') }}" class="btn btn-warning">
                     <i class="fas fa-chart-line me-2"></i>Lihat Data
                 </a>
             </div>
@@ -65,34 +65,35 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 text-center mb-3">
-                        <div class="border rounded p-3" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                        <div class="border rounded p-3">
                             <i class="fas fa-users fa-2x text-primary mb-2"></i>
-                            <h4 class="text-primary">{{ number_format($data->sum('jumlah_penduduk')) }}</h4>
+                            <h4 class="text-primary">{{ number_format($totalPenduduk) }}</h4>
                             <p class="mb-0 text-muted">Total Penduduk</p>
                         </div>
                     </div>
                     <div class="col-md-3 text-center mb-3">
-                        <div class="border rounded p-3" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                        <div class="border rounded p-3">
                             <i class="fas fa-male fa-2x text-info mb-2"></i>
-                            <h4 class="text-info">{{ number_format($data->sum('laki_laki')) }}</h4>
+                            <h4 class="text-info">{{ number_format($totalLaki) }}</h4>
                             <p class="mb-0 text-muted">Laki-laki</p>
                         </div>
                     </div>
                     <div class="col-md-3 text-center mb-3">
-                        <div class="border rounded p-3" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                        <div class="border rounded p-3">
                             <i class="fas fa-female fa-2x text-danger mb-2"></i>
-                            <h4 class="text-danger">{{ number_format($data->sum('perempuan')) }}</h4>
+                            <h4 class="text-danger">{{ number_format($totalPerempuan) }}</h4>
                             <p class="mb-0 text-muted">Perempuan</p>
                         </div>
                     </div>
                     <div class="col-md-3 text-center mb-3">
-                        <div class="border rounded p-3" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                        <div class="border rounded p-3">
                             <i class="fas fa-map-marker-alt fa-2x text-success mb-2"></i>
-                            <h4 class="text-success">{{ $data->count() }}</h4>
+                            <h4 class="text-success">{{ $totalKecamatan }}</h4>
                             <p class="mb-0 text-muted">Kecamatan</p>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

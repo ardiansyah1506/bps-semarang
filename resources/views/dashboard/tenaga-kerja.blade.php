@@ -69,11 +69,17 @@
                                 <td>{{ number_format($item->tpt, 2) }}</td>
                                 <td>{{ number_format($item->tkk, 2) }}</td>
                                 <td>{{ number_format($item->jumlah) }}</td>
-                                <td>
+                                <td class="text-nowrap">
+                                    <button type="button"
+                                            class="btn btn-sm btn-warning me-1"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editTenagaKerjaModal-{{ $item->id }}">
+                                        <i class="fas fa-edit"></i> 
+                                    </button>
                                     <form action="{{ route('penduduk.kerja.hapus', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Hapus</button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> </button>
                                     </form>
                                 </td>
                             </tr>
@@ -85,12 +91,82 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Modal Edit Data (generate per row) -->
+           
+                <!-- End Modal Edit Data -->
+
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Tambah Data -->
+
+@foreach($data as $item)
+<div class="modal fade" id="editTenagaKerjaModal-{{ $item->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="{{ route('penduduk.kerja.update', $item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title text-white">Edit Data Tenaga Kerja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="mb-3">
+                        <label class="form-label">Tahun</label>
+                        <select class="form-select" name="tahun">
+                            <option value="">-- Pilih Tahun --</option>
+                            @for($tahun = 2020; $tahun <= 2024; $tahun++)
+                                <option value="{{ $tahun }}" {{ (int) $item->tahun === (int) $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Bekerja Laki-Laki</label>
+                            <input type="number" class="form-control" name="bekerja_laki_laki" value="{{ old('bekerja_laki_laki', $item->bekerja_laki_laki) }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Bekerja Perempuan</label>
+                            <input type="number" class="form-control" name="bekerja_perempuan" value="{{ old('bekerja_perempuan', $item->bekerja_perempuan) }}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengangguran Laki-Laki</label>
+                            <input type="number" class="form-control" name="pengangguran_laki_laki" value="{{ old('pengangguran_laki_laki', $item->pengangguran_laki_laki) }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengangguran Perempuan</label>
+                            <input type="number" class="form-control" name="pengangguran_perempuan" value="{{ old('pengangguran_perempuan', $item->pengangguran_perempuan) }}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">TPAK (%)</label>
+                            <input type="number" step="0.01" class="form-control" name="tpak" value="{{ old('tpak', $item->tpak) }}" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">TPT (%)</label>
+                            <input type="number" step="0.01" class="form-control" name="tpt" value="{{ old('tpt', $item->tpt) }}" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">TKK (%)</label>
+                            <input type="number" step="0.01" class="form-control" name="tkk" value="{{ old('tkk', $item->tkk) }}" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-warning text-white">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 <!-- Modal Tambah Data -->
 <div class="modal fade" id="addTenagaKerjaModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -104,7 +180,12 @@
                 <div class="modal-body bg-light">
                     <div class="mb-3">
                         <label class="form-label">Tahun</label>
-                        <input type="number" class="form-control" name="tahun" required>
+                        <select class="form-select" name="tahun">
+                            <option value="">-- Pilih Tahun --</option>
+                            @for($tahun = 2020; $tahun <= 2024; $tahun++)
+                                <option value="{{ $tahun }}">{{ $tahun }}</option>
+                            @endfor
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -149,6 +230,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

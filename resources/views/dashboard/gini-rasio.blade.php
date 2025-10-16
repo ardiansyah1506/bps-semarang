@@ -75,7 +75,7 @@
                                 <td>{{ number_format($item->gini_rasio, 3) }}</td>
                                 <td>{{ number_format($item->jumlah) }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-info" title="Edit">
+                                    <button class="btn btn-sm btn-info" title="Edit" data-bs-toggle="modal" data-bs-target="#editGiniRasioModal-{{ $item->id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <form action="{{ route('ginirasio.hapus', $item->id) }}" method="POST" class="d-inline">
@@ -166,4 +166,48 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Edit Gini Rasio (per item) -->
+@foreach($data as $item)
+<div class="modal fade" id="editGiniRasioModal-{{ $item->id }}" tabindex="-1" aria-labelledby="editGiniRasioLabel-{{ $item->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('ginirasio.mis.update', $item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="editGiniRasioLabel-{{ $item->id }}">Edit Data Gini Rasio dan Kemiskinan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="mb-3">
+                        <label for="tahun-{{ $item->id }}" class="form-label">Tahun</label>
+                        <input type="number" class="form-control" name="tahun" id="tahun-{{ $item->id }}" value="{{ $item->tahun }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="penduduk_miskin-{{ $item->id }}">Jumlah Penduduk Miskin</label>
+                        <input type="number" class="form-control" name="penduduk_miskin" id="penduduk_miskin-{{ $item->id }}" value="{{ $item->penduduk_miskin }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="penduduk_miskin_persen-{{ $item->id }}">Penduduk Miskin Dalam Persen</label>
+                        <input type="number" step="0.01" class="form-control" name="penduduk_miskin_persen" id="penduduk_miskin_persen-{{ $item->id }}" value="{{ $item->penduduk_miskin_persen }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="garis_kemiskinan-{{ $item->id }}">Garis Kemiskinan</label>
+                        <input type="number" class="form-control" name="garis_kemiskinan" id="garis_kemiskinan-{{ $item->id }}" value="{{ $item->garis_kemiskinan }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="gini_rasio-{{ $item->id }}">Gini Rasio</label>
+                        <input type="number" step="0.001" class="form-control" name="gini_rasio" id="gini_rasio-{{ $item->id }}" value="{{ $item->gini_rasio }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-info text-white">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection

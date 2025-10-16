@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form method="GET" action="{{ route('penduduk.umur') }}" class="row align-items-end">
+                <form method="GET" action="{{ route('penduduk.umur.index') }}" class="row align-items-end">
                     <div class="col-md-3">
                         <label for="tahun" class="form-label">Pilih Tahun</label>
                         <select name="tahun" id="tahun" class="form-select">
@@ -27,7 +27,7 @@
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="fas fa-filter me-2"></i>Filter Data
                         </button>
-                        <a href="{{ route('penduduk.umur') }}" class="btn btn-secondary">
+                        <a href="{{ route('penduduk.umur.index') }}" class="btn btn-secondary">
                             <i class="fas fa-refresh me-2"></i>Reset
                         </a>
                     </div>

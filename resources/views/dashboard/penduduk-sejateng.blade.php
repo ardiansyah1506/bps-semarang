@@ -31,7 +31,7 @@
                 <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filter Tahun dan Kota/Kabupaten</h5>
             </div>
             <div class="card-body">
-                <form method="GET" action="{{ route('penduduk.sejateng') }}" class="row align-items-end">
+                <form method="GET" action="{{ route('penduduk.sejateng.index') }}" class="row align-items-end">
                     <div class="col-md-3">
                         <label for="tahun" class="form-label">Pilih Tahun</label>
                         <select name="tahun" id="tahun" class="form-select">
@@ -69,7 +69,7 @@
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="fas fa-filter me-2"></i>Filter Data
                         </button>
-                        <a href="{{ route('penduduk.sejateng') }}" class="btn btn-secondary">
+                        <a href="{{ route('penduduk.sejateng.index') }}" class="btn btn-secondary">
                             <i class="fas fa-refresh me-2"></i>Reset
                         </a>
                     </div>
