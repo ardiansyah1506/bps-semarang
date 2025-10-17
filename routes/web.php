@@ -136,6 +136,7 @@ Route::post('/penduduk/kerja/tambahdua', [DashboardController::class, 'tambahTen
 Route::put('/penduduk/kerja/{id}', [DashboardController::class, 'updateTenagaKerjaDua'])->name('penduduk.kerja.updatedua');
 
 Route::delete('/penduduk/kerja/hapus/{id}', [DashboardController::class, 'hapusKerja'])->name('penduduk.kerja.hapus');
+Route::delete('/penduduk/kerjadua/hapus/{id}', [DashboardController::class, 'hapusKerjaDua'])->name('penduduk.kerjadua.hapus');
 Route::post('/ginirasio/mis/tambah', [DashboardController::class, 'tambahGiniRasio'])->name('ginirasio.mis.tambah');
 Route::put('/ginirasio/mis/{id}', [DashboardController::class, 'updateGiniRasio'])->name('ginirasio.mis.update');
 
@@ -181,5 +182,5 @@ Route::get('/ekonomisatu', [DashboardController::class, 'Ekonomi'])->name('ekono
 Route::post('/tambah/ekonomi', [DashboardController::class, 'tambahEkonomi'])->name('tambah.ekonom');
 Route::get('/ekonomi/sef', [DashboardController::class, 'EkonomiSE'])->name('ekonomi.tambah.se');
 Route::post('/nambah/ekonomi/se', [DashboardController::class, 'nambahEkonomi'])->name('nambah.ekonomi.se');
-Route::get('/hapus/ginirasio/{id}', [DashboardController::class, 'hapusDataGinRas'])->name('ginirasio.hapus');
+Route::delete('/hapus/ginirasio/{id}', [DashboardController::class, 'hapusDataGinRas'])->name('ginirasio.hapus');
 Route::get('/nakerjateng', [DashboardController::class, 'IDG'])->name('nakerjateng');

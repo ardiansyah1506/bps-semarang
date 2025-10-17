@@ -109,7 +109,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
 
-                                        <form action="#" method="POST" class="d-inline">
+                                        <form action={{ Route('penduduk.kerjadua.hapus', $item->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">

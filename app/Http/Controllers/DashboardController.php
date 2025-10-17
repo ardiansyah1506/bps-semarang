@@ -274,6 +274,17 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus data tenaga kerja: ' . $e->getMessage());
         }
     }
+    public function hapusKerjaDua($id)
+    {
+        try {
+            $data = TenagaKerjaDua::findOrFail($id);
+            $data->delete();
+
+            return redirect()->back()->with('success', 'Data tenaga kerja berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data tenaga kerja: ' . $e->getMessage());
+        }
+    }
 
     public function ipmidg()
     {
