@@ -228,3 +228,5 @@ Proyek ini dikembangkan untuk BPS Kota Semarang.
 - Telepon: (024) 351-1234
 - Email: bps3374@bps.go.id
 - Website: semarangkota.bps.go.id 
+## documaentation link
+https://massive-result-cfd.notion.site/Fitur-Aplikasi-Statistik-Kota-Progress-Checklist-28e48281957a809fa53fd180d6ba9e0e?pvs=74
