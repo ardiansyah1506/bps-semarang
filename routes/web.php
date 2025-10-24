@@ -145,8 +145,14 @@ Route::get('/tenagakerjaduaa', [DashboardController::class, 'tenagakerjadua'])->
 Route::get('/ginimenu', [DashboardController::class, 'ipmidg'])->name('ginimenu');
 Route::get('/ipmdata', [DashboardController::class, 'ipm'])->name('ipmdata');
 Route::post('/ipm/data/tahun', [DashboardController::class, 'tambahIpM'])->name('ipm.data.tahun');
+Route::get('/ipm/edit/{id}', [DashboardController::class, 'editIpM'])->name('ipm.edit');
+Route::put('/ipm/update/{id}', [DashboardController::class, 'updateIpM'])->name('ipm.update');
+
 Route::get('/ipgdata', [DashboardController::class, 'ipg'])->name('ipgdata');
 Route::post('/ipg/data/tahun', [DashboardController::class, 'tambahIpG'])->name('ipg.data.tahun');
+Route::get('/ipg/edit/{id}', [IpGController::class, 'editIpG'])->name('ipg.edit');
+Route::put('/ipg/update/{id}', [IpGController::class, 'updateIpG'])->name('ipg.update');
+
 Route::get('/inflasi', function (){
     return view('dashboard.inflasimenu');
 });

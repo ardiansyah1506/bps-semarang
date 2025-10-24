@@ -34,7 +34,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="card h-100 shadow-sm rounded">
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">Kondisi Ketenagakerjaan Jateng</h5>
@@ -44,7 +44,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection

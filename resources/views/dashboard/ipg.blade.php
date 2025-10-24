@@ -71,12 +71,18 @@
                                 <td>{{ number_format($item->Pengeluaran_Pria, 2) }}</td>
                                 <td>{{ number_format($item->Pengeluaran_Wanita, 2) }}</td>
                                 <td>{{ number_format($item->jumlah) }}</td>
-                                <td>
+                                <td class="d-flex justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-warning btn-sm editBtn" data-id="{{ $item->id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                     <form action="#" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Hapus</button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> </button>
+                                        
                                     </form>
+                                   
+                                    
                                 </td>
                             </tr>
                             @empty
@@ -106,7 +112,12 @@
                 <div class="modal-body bg-light">
                     <div class="mb-3">
                         <label class="form-label">Tahun</label>
-                        <input type="number" class="form-control" name="tahun" required>
+                        <select class="form-select" id="filter_tahun" name="tahun">
+                            <option value="">-- Pilih Tahun --</option>
+                            @for($tahun = 2020; $tahun <= 2024; $tahun++)
+                                <option value="{{ $tahun }}" {{ request('tahun') == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                            @endfor
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -156,5 +167,100 @@
     </div>
 </div>
 
+<!-- Modal Edit Data -->
+<div class="modal fade" id="editIPGModal" tabindex="-1" aria-labelledby="editIPGModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editIPGForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title">Edit Data IPG</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="mb-3">
+                        <label class="form-label">Tahun</label>
+                        <input type="number" class="form-control" name="tahun" id="edit_tahun" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">UHH Pria</label>
+                            <input type="number" class="form-control" name="UHH_Pria" id="edit_UHH_Pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">UHH Wanita</label>
+                            <input type="number" class="form-control" name="UHH_Wanita" id="edit_UHH_Wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">RLS Pria</label>
+                            <input type="number" class="form-control" name="RLS_Pria" id="edit_RLS_Pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">RLS Wanita</label>
+                            <input type="number" class="form-control" name="RLS_Wanita" id="edit_RLS_Wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">HLS Pria</label>
+                            <input type="number" step="0.01" class="form-control" name="HLS_Pria" id="edit_HLS_Pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">HLS Wanita</label>
+                            <input type="number" step="0.01" class="form-control" name="HLS_Wanita" id="edit_HLS_Wanita" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengeluaran Pria</label>
+                            <input type="number" class="form-control" name="Pengeluaran_Pria" id="edit_Pengeluaran_Pria" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengeluaran Wanita</label>
+                            <input type="number" class="form-control" name="Pengeluaran_Wanita" id="edit_Pengeluaran_Wanita" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-warning">Perbarui Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.editBtn');
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+
+            fetch(`/ipg/edit/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('edit_tahun').value = data.tahun;
+                    document.getElementById('edit_UHH_Pria').value = data.UHH_Pria;
+                    document.getElementById('edit_UHH_Wanita').value = data.UHH_Wanita;
+                    document.getElementById('edit_RLS_Pria').value = data.RLS_Pria;
+                    document.getElementById('edit_RLS_Wanita').value = data.RLS_Wanita;
+                    document.getElementById('edit_HLS_Pria').value = data.HLS_Pria;
+                    document.getElementById('edit_HLS_Wanita').value = data.HLS_Wanita;
+                    document.getElementById('edit_Pengeluaran_Pria').value = data.Pengeluaran_Pria;
+                    document.getElementById('edit_Pengeluaran_Wanita').value = data.Pengeluaran_Wanita;
+
+                    const form = document.getElementById('editIPGForm');
+                    form.setAttribute('action', `/ipg/update/${data.id}`);
+
+                    const modal = new bootstrap.Modal(document.getElementById('editIPGModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    alert('Gagal memuat data untuk diedit!');
+                    console.error(error);
+                });
+        });
+    });
+});
+</script>
+@endpush

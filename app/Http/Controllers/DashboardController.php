@@ -564,6 +564,43 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan data IPM: ' . $e->getMessage());
         }
     }
+
+    public function editIpM($id)
+{
+    $data = IpM::findOrFail($id);
+    return response()->json($data); // untuk diambil oleh AJAX (modal edit)
+}
+
+public function updateIpM(Request $request, $id)
+{
+    $request->validate([
+        'tahun'       => 'required|integer',
+        'UHH'         => 'required|numeric|min:0',
+        'RLS'         => 'required|numeric|min:0',
+        'HLS'         => 'required|numeric|min:0',
+        'Pengeluaran' => 'required|integer|min:0',
+    ]);
+
+    try {
+        $ipm = IpM::findOrFail($id);
+
+        $jumlah = $request->UHH + $request->RLS + $request->HLS;
+
+        $ipm->update([
+            'tahun'       => $request->tahun,
+            'UHH'         => $request->UHH,
+            'RLS'         => $request->RLS,
+            'HLS'         => $request->HLS,
+            'Pengeluaran' => $request->Pengeluaran,
+            'jumlah'      => $jumlah,
+        ]);
+
+        return redirect()->route('ipm')->with('success', 'Data IPM berhasil diperbarui!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal memperbarui data IPM: ' . $e->getMessage());
+    }
+}
+
     public function ipg(Request $request)
     {
         $query = IPG::orderBy('tahun', 'desc');
@@ -615,6 +652,52 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan data IPG: ' . $e->getMessage());
         }
     }
+    public function editIpG($id)
+{
+    $data = IPG::findOrFail($id);
+    return response()->json($data); // untuk AJAX modal edit
+}
+
+public function updateIpG(Request $request, $id)
+{
+    $request->validate([
+        'tahun'              => 'required|integer',
+        'UHH_Pria'           => 'required|numeric|min:0',
+        'UHH_Wanita'         => 'required|numeric|min:0',
+        'RLS_Pria'           => 'required|numeric|min:0',
+        'RLS_Wanita'         => 'required|numeric|min:0',
+        'HLS_Pria'           => 'required|numeric|min:0',
+        'HLS_Wanita'         => 'required|numeric|min:0',
+        'Pengeluaran_Pria'   => 'required|integer|min:0',
+        'Pengeluaran_Wanita' => 'required|integer|min:0',
+    ]);
+
+    try {
+        $ipg = IPG::findOrFail($id);
+
+        $jumlah = $request->UHH_Pria + $request->UHH_Wanita +
+                  $request->RLS_Pria + $request->RLS_Wanita +
+                  $request->HLS_Pria + $request->HLS_Wanita;
+
+        $ipg->update([
+            'tahun'              => $request->tahun,
+            'UHH_Pria'           => $request->UHH_Pria,
+            'UHH_Wanita'         => $request->UHH_Wanita,
+            'RLS_Pria'           => $request->RLS_Pria,
+            'RLS_Wanita'         => $request->RLS_Wanita,
+            'HLS_Pria'           => $request->HLS_Pria,
+            'HLS_Wanita'         => $request->HLS_Wanita,
+            'Pengeluaran_Pria'   => $request->Pengeluaran_Pria,
+            'Pengeluaran_Wanita' => $request->Pengeluaran_Wanita,
+            'jumlah'             => $jumlah,
+        ]);
+
+        return redirect()->route('ipg')->with('success', 'Data IPG berhasil diperbarui!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal memperbarui data IPG: ' . $e->getMessage());
+    }
+}
+
     public function tambahInflasiMakanan(Request $request)
     {
         $request->validate([

@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
     <!-- Statistik Cards -->
-    <div class="col-lg-3 col-md-6 mb-4">
+    <div class="col-lg-4 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -21,7 +21,7 @@
         </div>
     </div>
     
-    <div class="col-lg-3 col-md-6 mb-4">
+    <div class="col-lg-4 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -35,7 +35,7 @@
         </div>
     </div>
     
-    <div class="col-lg-3 col-md-6 mb-4">
+    {{-- <div class="col-lg-3 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -48,8 +48,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="col-lg-3 col-md-6 mb-4">
+     --}}
+    <div class="col-lg-4 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>

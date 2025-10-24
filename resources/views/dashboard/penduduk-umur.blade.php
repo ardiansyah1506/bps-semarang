@@ -145,7 +145,7 @@
                                     <td colspan="2"><strong>TOTAL</strong></td>
                                     <td><strong>{{ number_format(collect($dataUmur)->sum('laki_laki')) }}</strong></td>
                                     <td><strong>{{ number_format(collect($dataUmur)->sum('perempuan')) }}</strong></td>
-                                    <td><strong>{{ number_format(collect($dataUmur)->sum('total')) }}</strong></td>
+                                    <td><strong>{{ number_format(collect($dataUmur)->sum('jumlah')) }}</strong></td>
                                     <td></td>
                                 </tr>
                             @else

@@ -64,6 +64,10 @@
                                 <td>{{ number_format($item->Pengeluaran) }}</td>
                                 <td>{{ number_format($item->jumlah) }}</td>
                                 <td>
+                                    <button type="button" class="btn btn-warning btn-sm me-1 editBtn"
+                                    data-id="{{ $item->id }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                     <form action="#" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -128,4 +132,82 @@
         </div>
     </div>
 </div>
+<!-- Modal Edit Data IPM -->
+<div class="modal fade" id="editIPMModal" tabindex="-1" aria-labelledby="editIPMModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editIPMForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="editIPMModalLabel">Edit Data IPM</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tahun</label>
+                            <input type="number" class="form-control" name="tahun" id="edit_tahun" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">UHH</label>
+                            <input type="number" step="0.01" class="form-control" name="UHH" id="edit_UHH" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">RLS</label>
+                            <input type="number" step="0.01" class="form-control" name="RLS" id="edit_RLS" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">HLS</label>
+                            <input type="number" step="0.01" class="form-control" name="HLS" id="edit_HLS" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pengeluaran</label>
+                            <input type="number" class="form-control" name="Pengeluaran" id="edit_Pengeluaran" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-warning">Perbarui Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.editBtn');
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+
+            fetch(`/ipm/edit/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('edit_tahun').value = data.tahun;
+                    document.getElementById('edit_UHH').value = data.UHH;
+                    document.getElementById('edit_RLS').value = data.RLS;
+                    document.getElementById('edit_HLS').value = data.HLS;
+                    document.getElementById('edit_Pengeluaran').value = data.Pengeluaran;
+
+                    const form = document.getElementById('editIPMForm');
+                    form.setAttribute('action', `/ipm/update/${data.id}`);
+
+                    const modal = new bootstrap.Modal(document.getElementById('editIPMModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    alert('Gagal memuat data untuk diedit!');
+                    console.error(error);
+                });
+        });
+    });
+});
+</script>
+@endpush
+
