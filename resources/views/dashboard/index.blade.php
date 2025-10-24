@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
     <!-- Statistik Cards -->
-    <div class="col-lg-4 col-md-6 mb-4">
+    <div class="col-lg-3 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -21,7 +21,7 @@
         </div>
     </div>
     
-    <div class="col-lg-4 col-md-6 mb-4">
+    <div class="col-lg-3 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -35,7 +35,7 @@
         </div>
     </div>
     
-    {{-- <div class="col-lg-3 col-md-6 mb-4">
+    <div class="col-lg-3 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -48,8 +48,8 @@
             </div>
         </div>
     </div>
-     --}}
-    <div class="col-lg-4 col-md-6 mb-4">
+    
+    <div class="col-lg-3 col-md-6 mb-4">
         <div class="stats-card">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -113,24 +113,19 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-4 mb-3">
                         <a href="{{ route('penduduk') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-users me-2"></i>Data Penduduk
                         </a>
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-4 mb-3">
                         <a href="{{ route('tenaga-kerja') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-briefcase me-2"></i>Tenaga Kerja
                         </a>
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-4 mb-3">
                         <a href="{{ route('kemiskinan') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-heart me-2"></i>Data Kemiskinan
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="{{ route('gini-rasio') }}" class="btn btn-outline-primary w-100">
-                            <i class="fas fa-chart-line me-2"></i>Gini Rasio dan Kemiskinan
                         </a>
                     </div>
                 </div>
