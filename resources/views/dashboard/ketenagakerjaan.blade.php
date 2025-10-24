@@ -8,7 +8,7 @@
 <div class="container mt-4">
     <div class="row g-4">
         <!-- Card 1 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card h-100 shadow-sm rounded">
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">Presentase Usia Kerja 15+ Tahun</h5>
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card h-100 shadow-sm rounded">
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">Jumlah Usia Kerja Kota Semarang</h5>

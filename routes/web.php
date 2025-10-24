@@ -112,8 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gini-rasio', [DashboardController::class, 'giniRasio'])->name('gini-rasio');
     Route::post('/gini-rasio/tambah', [DashboardController::class, 'tambahGiniRasio'])->name('ginirasio.mis.tambah');
     Route::post('/gini-rasio/tambah', [DashboardController::class, 'tambahGiniRasio'])->name('gini-rasio.tambah');
-Route::post('/gini-rasio/import', [DashboardController::class, 'importGiniRasio'])->name('gini-rasio.import');
-
+    Route::post('/gini-rasio/import', [DashboardController::class, 'importGiniRasio'])->name('gini-rasio.import');
 });
 
 
