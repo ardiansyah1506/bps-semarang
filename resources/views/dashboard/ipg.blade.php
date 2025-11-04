@@ -75,7 +75,7 @@
                                     <button type="button" class="btn btn-warning btn-sm editBtn" data-id="{{ $item->id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <form action="#" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')" class="d-inline">
+                                    <form action="{{ Route('ipg.delete', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> </button>

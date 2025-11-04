@@ -531,6 +531,10 @@ class DashboardController extends Controller
         }
 
         $data = $query->get();
+        $data->transform(function ($item) {
+            $item->jumlah = ($item->UHH + $item->RLS + $item->HLS + $item->Pengeluaran) / 4;
+            return $item;
+        });
         return view('dashboard.ipm', compact('data'));
     }
     public function tambahIpM(Request $request)
@@ -601,6 +605,18 @@ public function updateIpM(Request $request, $id)
     }
 }
 
+public function deleteIpM($id)
+{
+    try {
+        $ipm = IpM::findOrFail($id);
+        $ipm->delete();
+
+        return redirect()->route('ipm')->with('success', 'Data IPM berhasil dihapus!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal menghapus data IPM: ' . $e->getMessage());
+    }
+}
+
     public function ipg(Request $request)
     {
         $query = IPG::orderBy('tahun', 'desc');
@@ -610,6 +626,28 @@ public function updateIpM(Request $request, $id)
         }
 
         $data = $query->get();
+        $data->transform(function ($item) {
+            // Pastikan semua nilai ada dan bukan null (gunakan 0 jika null)
+            $uhh_pria = $item->UHH_Pria ?? 0;
+            $uhh_wanita = $item->UHH_Wanita ?? 0;
+            $rls_pria = $item->RLS_Pria ?? 0;
+            $rls_wanita = $item->RLS_Wanita ?? 0;
+            $hls_pria = $item->HLS_Pria ?? 0;
+            $hls_wanita = $item->HLS_Wanita ?? 0;
+            $pengeluaran_pria = $item->Pengeluaran_Pria ?? 0;
+            $pengeluaran_wanita = $item->Pengeluaran_Wanita ?? 0;
+    
+            // Hitung rata-rata keseluruhan
+            $item->jumlah = (
+                $uhh_pria + $uhh_wanita +
+                $rls_pria + $rls_wanita +
+                $hls_pria + $hls_wanita +
+                $pengeluaran_pria + $pengeluaran_wanita
+            ) / 8;
+    
+            return $item;
+        });
+    
         return view('dashboard.ipg', compact('data'));
     }
     public function tambahIpG(Request $request)
@@ -727,7 +765,18 @@ public function updateIpG(Request $request, $id)
                 ->with('error', 'Gagal menambahkan data inflasi makanan: ' . $e->getMessage());
         }
     }
-
+    public function deleteIpG($id)
+    {
+        try {
+            $ipm = IPG::findOrFail($id);
+            $ipm->delete();
+    
+            return redirect()->route('ipm')->with('success', 'Data IPG berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data IPG: ' . $e->getMessage());
+        }
+    }
+    
     public function infasimakanan(Request $request)
     {
         $query = InflasiMakanan::orderBy('tahun', 'desc')

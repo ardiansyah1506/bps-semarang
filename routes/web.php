@@ -146,6 +146,8 @@ Route::get('/ipmdata', [DashboardController::class, 'ipm'])->name('ipmdata');
 Route::post('/ipm/data/tahun', [DashboardController::class, 'tambahIpM'])->name('ipm.data.tahun');
 Route::get('/ipm/edit/{id}', [DashboardController::class, 'editIpM'])->name('ipm.edit');
 Route::put('/ipm/update/{id}', [DashboardController::class, 'updateIpM'])->name('ipm.update');
+Route::delete('/ipm/delete/{id}', [DashboardController::class, 'deleteIpM'])->name('ipm.delete');
+Route::delete('/ipg/delete/{id}', [DashboardController::class, 'deleteIpG'])->name('ipg.delete');
 
 Route::get('/ipgdata', [DashboardController::class, 'ipg'])->name('ipgdata');
 Route::post('/ipg/data/tahun', [DashboardController::class, 'tambahIpG'])->name('ipg.data.tahun');
